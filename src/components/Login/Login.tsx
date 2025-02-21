@@ -2,17 +2,32 @@ import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
+import { useLoginMutation } from "../../redux/features/auth/authApi";
+import { useAppDispatch } from "../../redux/hooks";
+import { setUser } from "../../redux/features/auth/authSlice";
+import { verifyToken } from "../../utils/verifyToken";
 
 const Login = () => {
+    const dispatch = useAppDispatch();
+
     const form = useForm({
         defaultValues: {
-            email: "",
-            password: "",
+            email: "johndoe@example.com",
+            password: "SecurePass123!",
         },
     });
 
-    const handleLogin = (data: any) => {
+    const [login, { data, error }] = useLoginMutation();
+    console.log("data", data);
+    console.log("error", error);
+
+    const handleLogin = async (data: any) => {
         console.log(data);
+        const res = await login(data).unwrap();
+
+        const user = verifyToken(res.data.accessToken);
+
+        dispatch(setUser({ user: user, token: res.data.accessToken }));
         form.reset();
     };
 
