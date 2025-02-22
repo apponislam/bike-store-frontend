@@ -3,6 +3,8 @@ import App from "../App";
 import Login from "../components/Login/Login";
 import Register from "../components/Register/Register";
 import SignInUser from "../Protected/SignInUser";
+import AllProducts from "../components/AllProducts/AllProducts";
+import ProductDetails from "../components/AllProducts/ProductDetails";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +26,14 @@ const router = createBrowserRouter([
                         <Register></Register>
                     </SignInUser>
                 ),
+            },
+            {
+                path: "/products",
+                element: <AllProducts></AllProducts>,
+            },
+            {
+                path: "/product/:id",
+                element: <ProductDetails />,
             },
         ],
     },
