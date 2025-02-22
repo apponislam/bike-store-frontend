@@ -6,9 +6,13 @@ import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { useAppDispatch } from "../../redux/hooks";
 import { setUser } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/verifyToken";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Login = () => {
     const dispatch = useAppDispatch();
+
+    const navigate = useNavigate();
 
     const form = useForm({
         defaultValues: {
@@ -22,13 +26,16 @@ const Login = () => {
     console.log("error", error);
 
     const handleLogin = async (data: any) => {
-        console.log(data);
-        const res = await login(data).unwrap();
-
-        const user = verifyToken(res.data.accessToken);
-
-        dispatch(setUser({ user: user, token: res.data.accessToken }));
-        form.reset();
+        try {
+            const res = await login(data).unwrap();
+            const user = verifyToken(res.data.accessToken);
+            dispatch(setUser({ user: user, token: res.data.accessToken }));
+            navigate("/");
+            toast.success("Login successful");
+            form.reset();
+        } catch {
+            toast.error("Login failed");
+        }
     };
 
     return (

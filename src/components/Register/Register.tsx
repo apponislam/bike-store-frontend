@@ -4,37 +4,74 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { useRef, useState } from "react";
 import axios from "axios";
+import { useLoginMutation, useRegisterMutation } from "../../redux/features/auth/authApi";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { verifyToken } from "../../utils/verifyToken";
+import { useAppDispatch } from "../../redux/hooks";
+import { setUser } from "../../redux/features/auth/authSlice";
 
 const Register = () => {
     const [imageUrl, setImageUrl] = useState("");
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     // console.log(fileInputRef);
 
+    const [login] = useLoginMutation();
+    const [register] = useRegisterMutation();
+    // console.log("data", data);
+    // console.log("error", error);
+
     interface FormValues {
+        name: string;
         email: string;
         password: string;
-        photoURL?: string | null;
+        photo?: string | null;
     }
 
     const form = useForm<FormValues>({
         defaultValues: {
+            name: "",
             email: "",
             password: "",
-            photoURL: imageUrl,
+            photo: imageUrl,
         },
     });
 
-    const handleLogin = (data: any) => {
-        console.log(data);
+    const handleLogin = async (data: any) => {
+        try {
+            // console.log(data);
 
-        const photoURL = imageUrl;
+            const photo = imageUrl;
+            const role = "customer";
 
-        const registerData = { ...data, photoURL };
-        console.log(registerData);
+            const registerData = { ...data, photo, role };
+            // console.log(registerData);
+            const res = await register(registerData).unwrap();
+            console.log(res);
 
-        form.reset();
-        if (fileInputRef.current) {
-            fileInputRef.current.value = "";
+            const loginData = {
+                email: res.data.email,
+                password: data.password,
+            };
+
+            const loggedin = await login(loginData).unwrap();
+
+            const mainuser = verifyToken(loggedin.data.accessToken);
+            dispatch(setUser({ user: mainuser, token: loggedin.data.accessToken }));
+
+            toast.success("Registration successful");
+
+            navigate("/");
+
+            form.reset();
+            if (fileInputRef.current) {
+                fileInputRef.current.value = "";
+                setImageUrl("");
+            }
+        } catch {
+            toast.error("Registration failed");
         }
     };
 
@@ -48,23 +85,11 @@ const Register = () => {
             .post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGAPI}`, formData)
             .then((response) => {
                 setImageUrl(response.data.data.display_url);
-                console.log(response);
-                console.log(response.data.data.display_url);
+                // console.log(response);
+                // console.log(response.data.data.display_url);
             })
             .catch((error) => console.error(error));
     };
-
-    // const imagetoURL = (data: any) => {
-    //     const file = data.target.files[0];
-    //     if (file) {
-    //         uploadImage(file);
-    //     }
-    //     // console.log(imageUrl);
-    // };
-
-    // const imagetoURL = (data: any) => {
-    //     console.log(data);
-    // };
 
     return (
         <div className="flex items-center justify-center">
@@ -72,6 +97,18 @@ const Register = () => {
                 <div className="w-96 border rounded-2xl border-blue-500 p-5">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-4">
+                            <FormField
+                                control={form.control}
+                                name="name"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Name</FormLabel>
+                                        <FormControl>
+                                            <Input type="text" placeholder="Name" {...field} />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
                             <FormField
                                 control={form.control}
                                 name="email"
@@ -96,35 +133,10 @@ const Register = () => {
                                     </FormItem>
                                 )}
                             />
-                            {/* <FormField
-                                control={form.control}
-                                name="photoURL"
-                                render={({ field: { onBlur, onChange, ref, ...rest } }) => (
-                                    <FormItem>
-                                        <FormLabel>Photo</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                type="file"
-                                                accept="image/*"
-                                                onBlur={onBlur}
-                                                onChange={(e) => {
-                                                    const file = e.target.files?.[0];
-                                                    if (file) {
-                                                        uploadImage(file); // Upload to imgbb
-                                                        onChange(file); // Update React Hook Form state
-                                                    }
-                                                }}
-                                                ref={ref}
-                                                {...rest}
-                                            />
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            /> */}
 
                             <FormField
                                 control={form.control}
-                                name="photoURL"
+                                name="photo"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Photo</FormLabel>
