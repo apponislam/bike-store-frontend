@@ -6,13 +6,16 @@ import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { useAppDispatch } from "../../redux/hooks";
 import { setUser } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/verifyToken";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const Login = () => {
     const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
+    const location = useLocation() as { state?: { from?: string } };
+    const redirectPath = location?.state?.from || "/dashboard";
+    console.log(redirectPath);
 
     const form = useForm({
         defaultValues: {
@@ -21,16 +24,20 @@ const Login = () => {
         },
     });
 
-    const [login, { data, error }] = useLoginMutation();
-    console.log("data", data);
-    console.log("error", error);
+    const [login] = useLoginMutation();
+    // console.log("data", data);
+    // console.log("error", error);
 
     const handleLogin = async (data: any) => {
         try {
             const res = await login(data).unwrap();
             const user = verifyToken(res.data.accessToken);
             dispatch(setUser({ user: user, token: res.data.accessToken }));
-            navigate("/");
+
+            console.log(redirectPath);
+            navigate(redirectPath, { replace: true });
+
+            // navigate("/");
             toast.success("Login successful");
             form.reset();
         } catch {
