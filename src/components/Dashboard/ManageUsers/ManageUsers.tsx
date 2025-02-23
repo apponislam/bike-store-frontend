@@ -3,15 +3,25 @@ import { Card } from "../../ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import { Button } from "../../ui/button";
+import { TailSpin } from "react-loader-spinner";
 
 const ManageUsers = () => {
-    const { data, isLoading } = useGetAllUsersQuery();
+    const { data, isLoading, error } = useGetAllUsersQuery();
 
     const users = data?.data;
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
+    if (isLoading)
+        return (
+            <div className="flex items-center justify-center my-20">
+                <TailSpin color="#ff0000" />
+            </div>
+        );
+    if (error)
+        return (
+            <div className="flex items-center justify-center my-20">
+                <h2 className="text-center font-bold text-2xl mb-5 uppercase">Error loading products</h2>
+            </div>
+        );
 
     return (
         <Card className="w-full p-6">

@@ -41,7 +41,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
                 <p className="text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-2">{product.description}</p>
             </CardContent>
 
-            <CardFooter className="flex justify-between p-4 pt-0">
+            <CardFooter className="flex justify-between p-4">
                 <Link className="w-full" to={`/product/${product._id}`}>
                     <Button className="w-full">View details</Button>
                 </Link>

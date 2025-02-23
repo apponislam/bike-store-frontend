@@ -17,7 +17,14 @@ const userApi = baseApi.injectEndpoints({
                 url: `/users`,
             }),
         }),
+        changePassword: builder.mutation({
+            query: (data) => ({
+                url: "/users/change-password",
+                method: "POST",
+                body: data,
+            }),
+        }),
     }),
 });
 
-export const { useGetAllUsersQuery } = userApi;
+export const { useGetAllUsersQuery, useChangePasswordMutation } = userApi;

@@ -12,11 +12,14 @@ import Profile from "../components/Dashboard/Profile/Profile";
 import ManageUsers from "../components/Dashboard/ManageUsers/ManageUsers";
 import ManageOrders from "../components/Dashboard/ManageOrders/ManageOrders";
 import AdminRoute from "../Protected/AdminRoute";
+import NotFound from "../components/NotFound/NotFound";
+import AboutPage from "../components/AboutUs/AboutUs";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <App></App>,
+        errorElement: <NotFound></NotFound>,
         children: [
             {
                 path: "/login",
@@ -37,6 +40,10 @@ const router = createBrowserRouter([
             {
                 path: "/products",
                 element: <AllProducts></AllProducts>,
+            },
+            {
+                path: "/aboutus",
+                element: <AboutPage></AboutPage>,
             },
             {
                 path: "/product/:id",
