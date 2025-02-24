@@ -9,7 +9,6 @@ interface SignInUserProps {
 
 const AdminRoute: React.FC<SignInUserProps> = ({ children }) => {
     const user = useAppSelector(currentUser);
-    console.log(user?.role);
 
     if (user && user?.role == "admin") {
         return children;

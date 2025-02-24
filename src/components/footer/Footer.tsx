@@ -45,7 +45,11 @@ const Footer = () => {
                                 <a href="#">+880 1722 779803</a>
                             </li>
                             <li>
-                                <a href="#">11appon11@gmail.com</a>
+                                <a href="#">
+                                    11appon11@
+                                    <br className="block sm:hidden" />
+                                    gmail.com
+                                </a>
                             </li>
                             <li>
                                 <a href="#">Bike Store, Dinajpur Sadar</a>

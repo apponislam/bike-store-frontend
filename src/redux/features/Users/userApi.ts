@@ -6,6 +6,8 @@ export interface TUser {
     email: string;
     photo: string;
     role: string;
+    isBloked?: boolean;
+    status?: string;
     createdAt: string;
     updatedAt: string;
 }

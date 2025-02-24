@@ -1,6 +1,6 @@
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
-import demo from "../../assets/demo.jpg";
+// import demo from "../../assets/demo.jpg";
 import { Link } from "react-router-dom";
 
 interface Product {
@@ -25,10 +25,11 @@ const formatDate = (dateString: string) => {
 };
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+    // console.log(demo);
     return (
         <Card className="w-full  shadow-md dark:bg-gray-900 transition-all hover:shadow-xl">
             <div className="relative w-full overflow-hidden">
-                <img src={demo} alt={product.name} className="object-cover h-full rounded-t-xl" />
+                <img src={"/src/assets/demo.jpg"} alt={product.name} className="object-cover h-full rounded-t-xl" />
             </div>
 
             <CardContent className="p-4">

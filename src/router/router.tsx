@@ -14,6 +14,8 @@ import ManageOrders from "../components/Dashboard/ManageOrders/ManageOrders";
 import AdminRoute from "../Protected/AdminRoute";
 import NotFound from "../components/NotFound/NotFound";
 import AboutPage from "../components/AboutUs/AboutUs";
+import Home from "../components/Home/Home";
+import ManageProducts from "../components/Dashboard/ManageProducts/ManageProducts";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +23,10 @@ const router = createBrowserRouter([
         element: <App></App>,
         errorElement: <NotFound></NotFound>,
         children: [
+            {
+                index: true,
+                element: <Home></Home>,
+            },
             {
                 path: "/login",
                 element: (
@@ -76,6 +82,14 @@ const router = createBrowserRouter([
                 element: (
                     <AdminRoute>
                         <ManageOrders></ManageOrders>
+                    </AdminRoute>
+                ),
+            },
+            {
+                path: "/dashboard/manage-Products",
+                element: (
+                    <AdminRoute>
+                        <ManageProducts></ManageProducts>
                     </AdminRoute>
                 ),
             },
