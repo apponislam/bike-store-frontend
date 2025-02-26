@@ -23,18 +23,55 @@ export interface TOrder {
     updatedAt: string;
 }
 
+// order 2
+
+type User = {
+    _id: string;
+    name: string;
+    email: string;
+};
+
+type Transaction = {
+    id: string;
+    transactionStatus: string | null;
+    bank_status: string;
+    date_time: string;
+    method: string;
+    sp_code: string;
+    sp_message: string;
+};
+
+type Product = {
+    product: string;
+    quantity: number;
+    _id: string;
+};
+
+type Order = {
+    transaction: Transaction;
+    _id: string;
+    user: string | User;
+    products: Product[];
+    totalPrice: number;
+    status: string;
+    createdAt?: string;
+    updatedAt?: string;
+};
+
+export type Order2 = {
+    transaction: Transaction;
+    _id: string;
+    user: User;
+    products: Product[];
+    totalPrice: number;
+    status: string;
+    estimateTime?: string;
+    createdAt?: string;
+    updatedAt?: string;
+};
+
 const orderApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        // createOrder: builder.mutation({
-        //     query: ({ userInfo, token }) => ({
-        //         url: "/order",
-        //         method: "POST",
-        //         body: userInfo,
-        //         headers: {
-        //             Authorization: `Bearer ${token}`,
-        //         },
-        //     }),
-        // }),
         createOrder: builder.mutation({
             query: ({ payload, token }) => {
                 return {
@@ -47,12 +84,21 @@ const orderApi = baseApi.injectEndpoints({
                 };
             },
         }),
-        getOrders: builder.query({
-            query: () => "/order",
+        getOrders: builder.query<{ data: Order2[] }, string>({
+            query: (token) => ({
+                url: "/order",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }),
         }),
-        getAllOrders: builder.query<{ data: TOrder[] }, void>({
-            query: () => ({
+
+        getAllOrders: builder.query<{ data: Order[] }, string>({
+            query: (token) => ({
                 url: `/orders`,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             }),
         }),
         verifyOrder: builder.query({
@@ -65,7 +111,26 @@ const orderApi = baseApi.injectEndpoints({
                 },
             }),
         }),
+        cancelOrder: builder.mutation<{ data: Order }, { orderId: string; token: string }>({
+            query: ({ orderId, token }) => ({
+                url: `/orders/${orderId}/cancel`,
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }),
+        }),
+        updateOrderAdmin: builder.mutation<{ success: boolean; data: Product }, { orderId: string; token: string; updateData: any }>({
+            query: ({ orderId, token, updateData }) => ({
+                url: `/orders/${orderId}/update`,
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                body: updateData,
+            }),
+        }),
     }),
 });
 
-export const { useCreateOrderMutation, useGetAllOrdersQuery, useGetOrdersQuery, useVerifyOrderQuery } = orderApi;
+export const { useCreateOrderMutation, useGetAllOrdersQuery, useGetOrdersQuery, useVerifyOrderQuery, useCancelOrderMutation, useUpdateOrderAdminMutation } = orderApi;

@@ -17,6 +17,7 @@ import AboutPage from "../components/AboutUs/AboutUs";
 import Home from "../components/Home/Home";
 import ManageProducts from "../components/Dashboard/ManageProducts/ManageProducts";
 import PaymentVerify from "../components/AllProducts/PaymentVerify";
+import ManageMyProducts from "../components/Dashboard/ManageMyProducts/ManageMyProducts";
 
 const router = createBrowserRouter([
     {
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
                         <ManageProducts></ManageProducts>
                     </AdminRoute>
                 ),
+            },
+            {
+                path: "/dashboard/track-my-orders",
+                element: <ManageMyProducts></ManageMyProducts>,
             },
             {
                 path: "/dashboard/profile",
