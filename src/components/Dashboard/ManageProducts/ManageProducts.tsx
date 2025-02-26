@@ -1,10 +1,11 @@
 import { TailSpin } from "react-loader-spinner";
 import { useGetProductsQuery } from "../../../redux/features/products/productApi";
 import ProductCardAdmin from "./ProductCardAdmin";
+import AddProduct from "./AddProducts";
 
 const ManageProducts = () => {
     const filter = {};
-    const { data, isLoading, error } = useGetProductsQuery(filter);
+    const { data, isLoading, error } = useGetProductsQuery(filter, { pollingInterval: 5000 });
 
     if (isLoading)
         return (
@@ -27,7 +28,11 @@ const ManageProducts = () => {
             <div className="mx-5 sm:mx-0">
                 <h2 className="text-center font-bold text-2xl mb-5 uppercase">All Products</h2>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
+                <div className="mb-4 flex items-center justify-end">
+                    <AddProduct></AddProduct>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
                     {products?.map((product) => (
                         <ProductCardAdmin key={product._id} product={product}></ProductCardAdmin>
                     ))}

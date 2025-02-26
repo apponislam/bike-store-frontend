@@ -16,6 +16,7 @@ import NotFound from "../components/NotFound/NotFound";
 import AboutPage from "../components/AboutUs/AboutUs";
 import Home from "../components/Home/Home";
 import ManageProducts from "../components/Dashboard/ManageProducts/ManageProducts";
+import PaymentVerify from "../components/AllProducts/PaymentVerify";
 
 const router = createBrowserRouter([
     {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
             {
                 path: "/product/:id",
                 element: <ProductDetails />,
+            },
+            {
+                path: "/order/verify",
+                element: <PaymentVerify />,
             },
         ],
     },

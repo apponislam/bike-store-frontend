@@ -22,7 +22,7 @@ const AllProducts = () => {
 
     console.log(params);
 
-    const { data, isLoading, error } = useGetProductsQuery(params);
+    const { data, isLoading, error } = useGetProductsQuery(params, { pollingInterval: 5000 });
     const { data: data2, isLoading: isLoding2, error: error2 } = useGetProductBrandsQuery();
 
     // Individual handlers for each filter

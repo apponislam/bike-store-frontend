@@ -26,7 +26,16 @@ const userApi = baseApi.injectEndpoints({
                 body: data,
             }),
         }),
+        changeUserStatus: builder.mutation({
+            query: ({ userId, token }) => ({
+                url: `/users/change-status/${userId}`,
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }),
+        }),
     }),
 });
 
-export const { useGetAllUsersQuery, useChangePasswordMutation } = userApi;
+export const { useGetAllUsersQuery, useChangePasswordMutation, useChangeUserStatusMutation } = userApi;

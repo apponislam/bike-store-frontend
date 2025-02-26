@@ -14,8 +14,7 @@ const Login = () => {
 
     const navigate = useNavigate();
     const location = useLocation() as { state?: { from?: string } };
-    const redirectPath = location?.state?.from || "/dashboard";
-    console.log(redirectPath);
+    const redirectPath = location?.state?.from || "/";
 
     const form = useForm({
         defaultValues: {
@@ -40,8 +39,13 @@ const Login = () => {
             // navigate("/");
             toast.success("Login successful");
             form.reset();
-        } catch {
-            toast.error("Login failed");
+        } catch (err: any) {
+            if (err) {
+                // console.log(err);
+                toast.error(err?.data?.errorSources[0].message);
+            } else {
+                toast.error("Login failed");
+            }
         }
     };
 

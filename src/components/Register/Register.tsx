@@ -70,8 +70,13 @@ const Register = () => {
                 fileInputRef.current.value = "";
                 setImageUrl("");
             }
-        } catch {
-            toast.error("Registration failed");
+        } catch (err: any) {
+            console.log(err);
+            if (err) {
+                toast.error(err?.data?.errorSources[0].message);
+            } else {
+                toast.error("Registration failed");
+            }
         }
     };
 

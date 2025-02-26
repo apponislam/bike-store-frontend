@@ -8,7 +8,9 @@ interface Product {
     name: string;
     brand: string;
     price: number;
+    photo?: string;
     category: string;
+    isDelected?: boolean;
     description: string;
     quantity: number;
     inStock: boolean;
@@ -29,7 +31,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     return (
         <Card className="w-full  shadow-md dark:bg-gray-900 transition-all hover:shadow-xl">
             <div className="relative w-full overflow-hidden">
-                <img src={"/src/assets/demo.jpg"} alt={product.name} className="object-cover h-full rounded-t-xl" />
+                <img src={product?.photo ? product.photo : "/src/assets/demo.jpg"} alt={product.name} className="object-cover h-44 w-full rounded-t-xl" />
             </div>
 
             <CardContent className="p-4">

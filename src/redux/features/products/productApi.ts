@@ -43,6 +43,16 @@ const productApi = baseApi.injectEndpoints({
                 };
             },
         }),
+        createProduct: builder.mutation({
+            query: ({ productData, token }) => ({
+                url: "/products",
+                method: "POST",
+                body: productData,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }),
+        }),
         getProductBrands: builder.query<{ data: Partial<Product>[] }, void>({
             query: () => ({
                 url: "/productsBrand",
@@ -55,13 +65,14 @@ const productApi = baseApi.injectEndpoints({
         }),
         deleteProduct: builder.mutation<void, { _id: string; token: string }>({
             query: ({ _id, token }) => ({
-                url: `/products/${_id}`,
-                method: "DELETE",
+                url: `/products/${_id}/delete`,
+                method: "PUT",
                 headers: {
                     Authorization: `${token}`,
                 },
             }),
         }),
+
         updateProduct: builder.mutation<Product, { id: string; updatedData: Partial<Product>; token: string }>({
             query: ({ id, updatedData, token }) => ({
                 url: `/products/${id}`,
@@ -76,4 +87,4 @@ const productApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useGetProductsQuery, useGetProductBrandsQuery, useGetProductByIdQuery, useDeleteProductMutation, useUpdateProductMutation } = productApi;
+export const { useGetProductsQuery, useGetProductBrandsQuery, useGetProductByIdQuery, useDeleteProductMutation, useUpdateProductMutation, useCreateProductMutation } = productApi;

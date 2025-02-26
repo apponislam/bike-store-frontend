@@ -21,6 +21,7 @@ interface Product {
     inStock: boolean;
     imageUrl?: string;
     createdAt: string;
+    isDelected?: boolean;
 }
 
 const formatDate = (dateString: string) => {
@@ -45,7 +46,7 @@ const ProductCardAdmin: React.FC<{ product: Product }> = ({ product }) => {
 
         Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            text: "You want to delete this!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -54,7 +55,8 @@ const ProductCardAdmin: React.FC<{ product: Product }> = ({ product }) => {
         }).then(async (result) => {
             try {
                 if (result.isConfirmed) {
-                    await deleteProduct({ _id, token });
+                    const res = await deleteProduct({ _id, token });
+                    console.log(res);
                     refetch();
                     Swal.fire({
                         title: "Deleted!",
@@ -62,8 +64,8 @@ const ProductCardAdmin: React.FC<{ product: Product }> = ({ product }) => {
                         icon: "success",
                     });
                 }
-            } catch {
-                toast.error("Product delete failed");
+            } catch (err: any) {
+                toast.error(err?.data?.errorSources[0]?.message);
             }
         });
     };
@@ -71,7 +73,7 @@ const ProductCardAdmin: React.FC<{ product: Product }> = ({ product }) => {
     return (
         <Card className="w-full  shadow-md dark:bg-gray-900 transition-all hover:shadow-xl">
             <div className="relative w-full overflow-hidden">
-                <img src={product?.photo ? product.photo : "/src/assets/demo.jpg"} alt={product.name} className="object-cover h-full rounded-t-xl" />
+                <img src={product?.photo ? product.photo : "/src/assets/demo.jpg"} alt={product.name} className="object-cover h-40 w-full rounded-t-xl" />
             </div>
 
             <CardContent className="p-4">

@@ -1,12 +1,18 @@
-import { useGetAllUsersQuery } from "../../../redux/features/Users/userApi";
+import { useChangeUserStatusMutation, useGetAllUsersQuery } from "../../../redux/features/Users/userApi";
 import { Card } from "../../ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import { Button } from "../../ui/button";
 import { TailSpin } from "react-loader-spinner";
+import { useAppSelector } from "../../../redux/hooks";
+import { currentToken } from "../../../redux/features/auth/authSlice";
+import Swal from "sweetalert2";
+import { toast } from "sonner";
 
 const ManageUsers = () => {
-    const { data, isLoading, error } = useGetAllUsersQuery();
+    const { data, isLoading, error, refetch } = useGetAllUsersQuery();
+    const [changeUserStatus] = useChangeUserStatusMutation();
+    const token = useAppSelector(currentToken);
 
     const users = data?.data;
 
@@ -22,6 +28,37 @@ const ManageUsers = () => {
                 <h2 className="text-center font-bold text-2xl mb-5 uppercase">Error loading products</h2>
             </div>
         );
+
+    const handleUserStatus = (user: any) => {
+        console.log("Hii", user);
+
+        const userId = user._id;
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to update this",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+        }).then(async (result) => {
+            try {
+                if (result.isConfirmed) {
+                    const res = await changeUserStatus({ userId, token });
+                    console.log(res);
+                    refetch();
+                    Swal.fire({
+                        title: "Updated!",
+                        text: `${res?.data?.data?.name} status changed to ${res?.data?.data?.status}`,
+                        icon: "success",
+                    });
+                }
+            } catch {
+                toast.error("User statuc change failed");
+            }
+        });
+    };
 
     return (
         <Card className="w-full p-6">
@@ -48,7 +85,9 @@ const ManageUsers = () => {
                             <TableCell>{user.email}</TableCell>
                             <TableCell>{user.role}</TableCell>
                             <TableCell className="text-right">
-                                <Button variant="destructive">Block</Button>
+                                <Button onClick={() => handleUserStatus(user)} className={`w-28 ${user?.status === "active" ? "bg-green-600 hover:bg-green-700" : "bg-red-600 hover:bg-red-700"} text-white`}>
+                                    {user?.status === "active" ? "Block User" : "Activate User"}
+                                </Button>
                             </TableCell>
                         </TableRow>
                     ))}

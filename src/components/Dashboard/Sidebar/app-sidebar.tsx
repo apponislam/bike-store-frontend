@@ -47,8 +47,8 @@ export function AppSidebar() {
             icon: Home,
         },
         {
-            title: "Your Orders",
-            url: "/dashboard/your-orders",
+            title: "Track my orders",
+            url: "/dashboard/track-my-orders",
             icon: ShoppingBag,
         },
         {

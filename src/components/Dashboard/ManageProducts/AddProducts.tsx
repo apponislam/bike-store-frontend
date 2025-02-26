@@ -5,43 +5,47 @@ import { Button } from "../../ui/button";
 import { Label } from "../../ui/label";
 import { Input } from "../../ui/input";
 import { toast } from "sonner";
-import { useGetProductsQuery, useUpdateProductMutation } from "../../../redux/features/products/productApi";
+import { useCreateProductMutation, useGetProductsQuery } from "../../../redux/features/products/productApi"; // Import createProduct mutation
 import { useAppSelector } from "../../../redux/hooks";
 import { currentToken } from "../../../redux/features/auth/authSlice";
 import axios from "axios";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
 
-const ProductUpdate: React.FC<{ product: any }> = ({ product }) => {
+const AddProduct = () => {
     const [open, setOpen] = useState(false);
-    const { register, handleSubmit, reset, setValue } = useForm({ defaultValues: product });
-    const [updateProduct] = useUpdateProductMutation();
+    const { register, handleSubmit, reset, setValue } = useForm();
+    const [createProduct] = useCreateProductMutation(); // Use createProduct mutation
     const { refetch } = useGetProductsQuery({});
 
     const token = useAppSelector(currentToken);
 
     const onSubmit = async (data: any) => {
         if (!token) {
-            toast.error("You are not allowed to update this product");
+            toast.error("You are not allowed to add a product");
             return;
         }
 
-        console.log(data);
+        const inStock = data.quantity > 0;
+
+        const maindata = { ...data, inStock };
+
+        // console.log(maindata);
 
         try {
-            const res = await updateProduct({ id: product._id, updatedData: data, token });
+            const res = await createProduct({ productData: maindata, token });
 
-            // const error = (res?.error as any).data?.success;
-            if ((!res?.error as any).data?.success) {
-                const errMsg = (res?.error as any).data.errorSources[0].message;
+            if ((res as any)?.error) {
+                const errMsg = (res as any).error.data.errorSources[0].message;
                 toast.error(errMsg);
                 return;
             }
-            toast.success("Product updated successfully!");
+
+            toast.success("Product added successfully!");
             setOpen(false);
-            refetch();
-            reset();
+            refetch(); // Refetch the product list
+            reset(); // Reset the form
         } catch (err: any) {
-            toast.error("Failed to update product");
+            toast.error("Failed to add product");
             console.log(err);
         }
     };
@@ -54,7 +58,7 @@ const ProductUpdate: React.FC<{ product: any }> = ({ product }) => {
             .post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGAPI}`, formData)
             .then((response) => {
                 console.log(response.data.data);
-                setValue("photo", response.data.data.url);
+                setValue("photo", response.data.data.url); // Set the image URL in the form
             })
             .catch((error) => {
                 toast.error("Failed to upload image");
@@ -72,14 +76,12 @@ const ProductUpdate: React.FC<{ product: any }> = ({ product }) => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button className="w-1/2 mr-2" variant="outline">
-                    Update
-                </Button>
+                <Button>Add New Product</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>Edit Product</DialogTitle>
-                    <DialogDescription>Update product details</DialogDescription>
+                    <DialogTitle>Add New Product</DialogTitle>
+                    <DialogDescription>Fill in the details to add a new product</DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid gap-4 py-4">
@@ -107,7 +109,6 @@ const ProductUpdate: React.FC<{ product: any }> = ({ product }) => {
                             </Label>
                             <Select
                                 onValueChange={(value) => setValue("category", value)} // Update form value
-                                defaultValue={product.category} // Set default value
                             >
                                 <SelectTrigger className="col-span-3">
                                     <SelectValue placeholder="Select a category" />
@@ -141,7 +142,7 @@ const ProductUpdate: React.FC<{ product: any }> = ({ product }) => {
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button type="submit">Save changes</Button>
+                        <Button type="submit">Add Product</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>
@@ -149,4 +150,4 @@ const ProductUpdate: React.FC<{ product: any }> = ({ product }) => {
     );
 };
 
-export default ProductUpdate;
+export default AddProduct;
