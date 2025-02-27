@@ -28,13 +28,13 @@ const ManageMyOrders = () => {
             </div>
         );
 
-    const formatDate = (isoDate: string) => {
-        return new Date(isoDate).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-        });
-    };
+    // const formatDate = (isoDate: string) => {
+    //     return new Date(isoDate).toLocaleDateString("en-US", {
+    //         year: "numeric",
+    //         month: "long",
+    //         day: "numeric",
+    //     });
+    // };
 
     const getEstimatedDelivery = (order: any) => {
         if (order.estimateTime) {

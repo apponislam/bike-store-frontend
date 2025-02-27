@@ -6,9 +6,9 @@ import "slick-carousel/slick/slick-theme.css";
 import { Card, CardContent } from "../ui/card";
 
 const banners = [
-    { id: 1, image: "/src/assets/demo.jpg", text: "Limited Time Offer - Up to 50% Off!" },
-    { id: 2, image: "/src/assets/demo.jpg", text: "Ride the Future with Our Electric Bikes" },
-    { id: 3, image: "/src/assets/demo.jpg", text: "Explore New Adventures - Shop Now!" },
+    { id: 1, image: "https://i.ibb.co.com/2YLnc0TD/360-F-979397061-g-Nr-Tw3w-Vmm5-Fmv7-Ex-DLiw-Oqsq54q-YAgl.jpg", text: "Limited Time Offer - Up to 50% Off!" },
+    { id: 2, image: "https://i.ibb.co.com/p6F2dbhJ/images-1.jpg", text: "Ride the Future with Our Electric Bikes" },
+    { id: 3, image: "https://i.ibb.co.com/ZQP8hX0/images.jpg", text: "Explore New Adventures - Shop Now!" },
 ];
 
 export default function BannerCarousel() {

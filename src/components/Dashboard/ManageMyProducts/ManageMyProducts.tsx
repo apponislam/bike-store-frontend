@@ -7,6 +7,7 @@ import { TailSpin } from "react-loader-spinner";
 import OrderProgress from "./OrderProgress";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
+import { format } from "date-fns";
 
 const ManageMyOrders = () => {
     const token = useAppSelector(currentToken) ?? "";
@@ -29,12 +30,21 @@ const ManageMyOrders = () => {
             </div>
         );
 
-    const formatDate = (isoDate: string) => {
-        return new Date(isoDate).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-        });
+    // const formatDate = (isoDate: string) => {
+    //     return new Date(isoDate).toLocaleDateString("en-US", {
+    //         year: "numeric",
+    //         month: "long",
+    //         day: "numeric",
+    //     });
+    // };
+
+    const getEstimatedDelivery = (order: any) => {
+        if (order.estimateTime) {
+            return format(new Date(order.estimateTime), "MMMM dd, yyyy");
+        }
+        const createdAt = new Date(order.createdAt);
+        const estimatedDate = new Date(createdAt.setDate(createdAt.getDate() + 3));
+        return format(estimatedDate, "MMMM dd, yyyy");
     };
 
     const getStatusColor = (status: string) => {
@@ -112,8 +122,12 @@ const ManageMyOrders = () => {
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-gray-500">Estimated Delivery:</span>
-                                <span className="font-semibold">{formatDate(order?.createdAt as string)}</span>
+                                <span className="font-semibold">{getEstimatedDelivery(order)}</span>
                             </div>
+                            {/* <div className="flex justify-between">
+                                <span className="text-gray-500">Estimated Delivery:</span>
+                                <span className="font-semibold">{formatDate(order?.createdAt as string)}</span>
+                            </div> */}
                             <div className="flex justify-between">
                                 <span className="text-gray-500">Payment Status:</span>
                                 <Badge className={`${getStatusColor(order?.status)} text-white`}>{order?.status}</Badge>
