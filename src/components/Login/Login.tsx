@@ -16,12 +16,7 @@ const Login = () => {
     const location = useLocation() as { state?: { from?: string } };
     const redirectPath = location?.state?.from || "/";
 
-    const form = useForm({
-        defaultValues: {
-            email: "johndoe@example.com",
-            password: "SecurePass123!",
-        },
-    });
+    const form = useForm();
 
     const [login] = useLoginMutation();
     // console.log("data", data);
