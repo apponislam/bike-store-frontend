@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 
 const SpecialProducts = () => {
-    const { data, isLoading, error } = useGetProductsQuery();
+    const { data, isLoading, error } = useGetProductsQuery({});
 
     const products = data?.data || [];
     console.log(products);
