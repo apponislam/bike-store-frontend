@@ -26,7 +26,7 @@ const ManageMyOrders = () => {
     if (error)
         return (
             <div className="flex items-center justify-center my-20">
-                <h2 className="text-center font-bold text-2xl mb-5 uppercase">Error loading products</h2>
+                <h2 className="text-center font-bold text-2xl mb-5 uppercase">Error loading orders</h2>
             </div>
         );
 
