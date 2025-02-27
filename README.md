@@ -1,50 +1,76 @@
-# React + TypeScript + Vite
+## 🔗 Live Demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+👉 [Visit Live Site](https://peppy-hotteok-65ea2d.netlify.app/)
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🔐 Authentication & Authorization
 
-## Expanding the ESLint configuration
+-   User registration and login.
+-   Role-based access control (Admin/User).
+-   Secure password hashing and storage.
+-   Access & refresh token-based authentication.
+-   Change password functionality.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### 🛍️ Product Management
 
-- Configure the top-level `parserOptions` property like this:
+-   Browse all products and view product details.
+-   Filter products by brand.
+-   Admin can add, update, or soft-delete products.
+-   Dynamic product brand listing.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 🧑‍💻 User Management
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+-   Admin can view all users.
+-   Admin can toggle user status (active/inactive).
+-   Individual user profiles and order history.
+-   Role-based UI (Admin gets extra controls).
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### 🛒 Order Management
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+-   Place new orders with real-time price calculation.
+-   View order history for logged-in users.
+-   Admin can view all orders.
+-   Admin can update order status (processing, shipped, completed, canceled).
+-   Users can cancel their orders before processing starts.
+
+### 💰 Payment Integration
+
+-   ShurjoPay sandbox payment gateway integration.
+-   Automatic order verification after payment.
+-   Real-time payment status update.
+
+### ✅ Dashboard Features (For Admin)
+
+-   Product overview and management.
+-   User list and status management.
+-   Order overview with filters (status, date range, etc.).
+-   Revenue calculation and analytics (if needed).
+
+### 📲 Responsive Design
+
+-   Fully responsive for mobile, tablet, and desktop.
+-   Optimized for both performance and UX.
+
+---
+
+Want me to generate the **full frontend `README.md`** with setup instructions, tech stack, and folder structure? Let me know! 🚀
+
+```bash
+# Install dependencies
+npm install
+
+# Setup environment variables
+# Create a .env file in the root directory and add the following variables:
+# VITE_IMGAPI=your api
+
+
+# Start the development server
+npm run dev
+
+# Build the project for production
+npm run build
+
+# Start the production server
+npm start
 ```
