@@ -21,6 +21,8 @@ import ManageMyProducts from "../components/Dashboard/ManageMyProducts/ManageMyP
 import ContactUs from "../components/ContactUs/ContactUs";
 import FAQPage from "../components/FAQ/FAQ";
 import ContactMessagesTable from "../components/Dashboard/Contacts/Contacts";
+import { BlogPage } from "../components/blogs/BlogPage";
+import { BlogPostPage } from "../components/blogs/BlogPostPage";
 
 const router = createBrowserRouter([
     {
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
             {
                 path: "/contact",
                 element: <ContactUs></ContactUs>,
+            },
+            {
+                path: "/blog",
+                element: <BlogPage></BlogPage>,
+            },
+            {
+                path: "/blog/:id",
+                element: <BlogPostPage></BlogPostPage>,
             },
             {
                 path: "/faqs",
