@@ -6,6 +6,7 @@ type TUser = {
     email: string;
     photo: string;
     role: "admin" | "customer";
+    createdAt: Date;
 };
 
 type TAuthState = {
