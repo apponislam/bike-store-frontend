@@ -20,6 +20,7 @@ import PaymentVerify from "../components/AllProducts/PaymentVerify";
 import ManageMyProducts from "../components/Dashboard/ManageMyProducts/ManageMyProducts";
 import ContactUs from "../components/ContactUs/ContactUs";
 import FAQPage from "../components/FAQ/FAQ";
+import ContactMessagesTable from "../components/Dashboard/Contacts/Contacts";
 
 const router = createBrowserRouter([
     {
@@ -106,6 +107,14 @@ const router = createBrowserRouter([
                 element: (
                     <AdminRoute>
                         <ManageProducts></ManageProducts>
+                    </AdminRoute>
+                ),
+            },
+            {
+                path: "/dashboard/manage-contacts",
+                element: (
+                    <AdminRoute>
+                        <ContactMessagesTable></ContactMessagesTable>
                     </AdminRoute>
                 ),
             },

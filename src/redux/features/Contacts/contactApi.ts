@@ -15,7 +15,7 @@ const contactApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         createContact: builder.mutation({
             query: (payload) => ({
-                url: "/api/contact",
+                url: "/contact",
                 method: "POST",
                 body: payload,
             }),
@@ -23,10 +23,16 @@ const contactApi = baseApi.injectEndpoints({
 
         getAllContacts: builder.query<{ data: TContact[] }, void>({
             query: () => ({
-                url: "/api/contact",
+                url: "/contact",
+            }),
+        }),
+        deleteContact: builder.mutation({
+            query: (id) => ({
+                url: `/contact/${id}`,
+                method: "DELETE",
             }),
         }),
     }),
 });
 
-export const { useCreateContactMutation, useGetAllContactsQuery } = contactApi;
+export const { useCreateContactMutation, useGetAllContactsQuery, useDeleteContactMutation } = contactApi;

@@ -1,4 +1,4 @@
-import { Bike, Home, ShoppingBag, User, Users } from "lucide-react";
+import { Bike, Home, Mail, ShoppingBag, User, Users } from "lucide-react";
 
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../../ui/sidebar";
 import { cn } from "../../../lib/utils";
@@ -27,6 +27,11 @@ export function AppSidebar() {
             title: "Manage Orders",
             url: "/dashboard/manage-orders",
             icon: ShoppingBag,
+        },
+        {
+            title: "Manage Contacts",
+            url: "/dashboard/manage-contacts",
+            icon: Mail,
         },
         {
             title: "Manage Products",
