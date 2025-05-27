@@ -9,8 +9,8 @@ const Header = () => {
     const user = useAppSelector(currentUser);
 
     return (
-        <header className="container mx-auto z-50 bg-background">
-            <div className="flex h-20 items-center justify-between py-6 px-6 md:px-0">
+        <header className="sticky top-0 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
+            <div className="container mx-auto flex h-20 items-center justify-between py-6 px-6 md:px-0">
                 <MainNav items={routesConfig.mainNav} />
                 <nav className="flex items-center gap-5">
                     {user && <UserMenu />}

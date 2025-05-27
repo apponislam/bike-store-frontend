@@ -18,6 +18,8 @@ import Home from "../components/Home/Home";
 import ManageProducts from "../components/Dashboard/ManageProducts/ManageProducts";
 import PaymentVerify from "../components/AllProducts/PaymentVerify";
 import ManageMyProducts from "../components/Dashboard/ManageMyProducts/ManageMyProducts";
+import ContactUs from "../components/ContactUs/ContactUs";
+import FAQPage from "../components/FAQ/FAQ";
 
 const router = createBrowserRouter([
     {
@@ -52,6 +54,14 @@ const router = createBrowserRouter([
             {
                 path: "/aboutus",
                 element: <AboutPage></AboutPage>,
+            },
+            {
+                path: "/contact",
+                element: <ContactUs></ContactUs>,
+            },
+            {
+                path: "/faqs",
+                element: <FAQPage></FAQPage>,
             },
             {
                 path: "/product/:id",

@@ -50,17 +50,17 @@ const ManageMyOrders = () => {
     const getStatusColor = (status: string) => {
         switch (status) {
             case "Pending":
-                return "bg-yellow-500"; // Pending status - Yellow
+                return "bg-yellow-500";
             case "Paid":
-                return "bg-green-500"; // Paid status - Green
+                return "bg-green-500";
             case "Shipped":
-                return "bg-blue-500"; // Shipped status - Blue
+                return "bg-blue-500";
             case "Completed":
-                return "bg-purple-500"; // Completed status - Purple
+                return "bg-purple-500";
             case "Cancelled":
-                return "bg-red-500"; // Cancelled status - Red
+                return "bg-red-500";
             default:
-                return "bg-gray-500"; // Default color - Gray
+                return "bg-gray-500";
         }
     };
 
@@ -124,22 +124,12 @@ const ManageMyOrders = () => {
                                 <span className="text-gray-500">Estimated Delivery:</span>
                                 <span className="font-semibold">{getEstimatedDelivery(order)}</span>
                             </div>
-                            {/* <div className="flex justify-between">
-                                <span className="text-gray-500">Estimated Delivery:</span>
-                                <span className="font-semibold">{formatDate(order?.createdAt as string)}</span>
-                            </div> */}
+
                             <div className="flex justify-between">
                                 <span className="text-gray-500">Payment Status:</span>
                                 <Badge className={`${getStatusColor(order?.status)} text-white`}>{order?.status}</Badge>
                             </div>
 
-                            {/* Progress Bar */}
-                            {/* <div className="my-4">
-                                <span className="text-gray-500">Order Progress:</span>
-                                <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                                    <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${getProgress(order.status)}%` }}></div>
-                                </div>
-                            </div> */}
                             {order?.status === "Cancelled" ? null : <OrderProgress status={order.status}></OrderProgress>}
 
                             {/* Cancel Button (only for Pending and Processing orders) */}
