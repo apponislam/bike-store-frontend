@@ -1,10 +1,11 @@
-import { Bike, Home, Mail, ShoppingBag, User, Users } from "lucide-react";
+import { Bike, Home, Mail, ShoppingBag, StickyNote, User, Users } from "lucide-react";
 
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../../ui/sidebar";
 import { cn } from "../../../lib/utils";
 import { siteConfig } from "../../config/site";
 import { useAppSelector } from "../../../redux/hooks";
 import { currentUser } from "../../../redux/features/auth/authSlice";
+import { Link } from "react-router-dom";
 
 // Menu items.
 
@@ -17,6 +18,11 @@ export function AppSidebar() {
             title: "Home",
             url: "/",
             icon: Home,
+        },
+        {
+            title: "My Blogs",
+            url: "/dashboard/myblogs",
+            icon: StickyNote,
         },
         {
             title: "Manage Users",
@@ -75,7 +81,9 @@ export function AppSidebar() {
         <Sidebar>
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel className={cn("norican", "text-xl")}>{siteConfig.name}</SidebarGroupLabel>
+                    <Link to="/">
+                        <SidebarGroupLabel className={cn("norican", "text-xl")}>{siteConfig.name}</SidebarGroupLabel>
+                    </Link>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {items?.map((item) => (

@@ -1,9 +1,9 @@
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "../ui/card";
-import { Button } from "../ui/button";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "../../ui/card";
+import { Button } from "../../ui/button";
 import { Link } from "react-router-dom";
-import { Blog } from "../../redux/features/blogs/blogApi";
+import { Blog } from "../../../redux/features/blogs/blogApi";
 
-export const BlogCard = ({ post }: { post: Blog }) => {
+export const MyBlogCard = ({ post }: { post: Blog }) => {
     const authorName = typeof post.author === "string" ? post.author : post.author?.name || "Unknown";
 
     return (

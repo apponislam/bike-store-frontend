@@ -23,6 +23,9 @@ import FAQPage from "../components/FAQ/FAQ";
 import ContactMessagesTable from "../components/Dashboard/Contacts/Contacts";
 import { BlogPage } from "../components/blogs/BlogPage";
 import { BlogPostPage } from "../components/blogs/BlogPostPage";
+import { MyBlogs } from "../components/Dashboard/MyBlogs/MyBlogs";
+import AddBlogs from "../components/Dashboard/MyBlogs/AddBlogs";
+import EditBlog from "../components/Dashboard/MyBlogs/EditBlogs";
 
 const router = createBrowserRouter([
     {
@@ -95,6 +98,18 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <DashboardHome></DashboardHome>,
+            },
+            {
+                path: "/dashboard/myblogs",
+                element: <MyBlogs></MyBlogs>,
+            },
+            {
+                path: "/dashboard/myblogs/create",
+                element: <AddBlogs></AddBlogs>,
+            },
+            {
+                path: "/dashboard/myblogs/:id",
+                element: <EditBlog></EditBlog>,
             },
             {
                 path: "/dashboard/manage-users",

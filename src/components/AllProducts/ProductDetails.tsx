@@ -89,22 +89,8 @@ const ProductDetails = () => {
         }
     };
 
-    // const toastId = "cart";
-    // useEffect(() => {
-    //     if (orderLoading) toast.loading("Processing ...", { id: toastId });
-
-    //     if (isSuccess && orderData?.data) {
-    //         toast.success(orderData?.message, { id: toastId });
-    //         setTimeout(() => {
-    //             window.location.href = orderData.data;
-    //         }, 1000);
-    //     }
-
-    //     if (isError) toast.error(JSON.stringify(error), { id: toastId });
-    // }, [orderLoading, orderError, isError, isSuccess]);
-
     return (
-        <div className="max-w-4xl mx-auto p-6">
+        <div className="w-full container mx-auto p-6">
             <Card className="bg-background text-foreground shadow-lg">
                 <div className="relative w-full sm:h-96 overflow-hidden rounded-t-xl">
                     <img src={product?.photo ? product.photo : "/src/assets/demo.jpg"} alt={product.name} className="object-cover w-full h-full" />
