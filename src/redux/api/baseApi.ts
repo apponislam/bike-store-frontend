@@ -3,8 +3,8 @@ import { RootState } from "../store";
 export const baseApi = createApi({
     reducerPath: "baseApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:5000/api/",
-        // baseUrl: "https://bike-store-backend-bice.vercel.app/api/",
+        // baseUrl: "http://localhost:5000/api/",
+        baseUrl: "https://bike-store-backend-bice.vercel.app/api/",
         credentials: "include",
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).auth.token;
